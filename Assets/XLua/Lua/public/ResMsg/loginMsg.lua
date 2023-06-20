@@ -1,0 +1,2 @@
+loginMsg = {["login_view"] = {id = "login_view" ,path = "login/loadobjs/prefabs.unity3d",editor_path = "login/LoadObjs/prefabs/login_view.prefab",isLocal = false},
+["login_view_old"] = {id = "login_view_old" ,path = "login/loadobjs/prefabs.unity3d",editor_path = "login/LoadObjs/prefabs/login_view_old.prefab",isLocal = false}};

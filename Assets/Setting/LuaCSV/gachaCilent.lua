@@ -1,0 +1,27 @@
+gachaCilent={
+	[6001]={
+		id=6001,
+		itemID=20001,
+		probability=0.01,
+	},
+	[6002]={
+		id=6002,
+		itemID=20007,
+		probability=0.1,
+	},
+	[6003]={
+		id=6003,
+		itemID=20013,
+		probability=0.1,
+	},
+	[6004]={
+		id=6004,
+		itemID=20015,
+		probability=0.1,
+	},
+	[6005]={
+		id=6005,
+		itemID=20021,
+		probability=0.1,
+	},
+}

@@ -1,0 +1,3718 @@
+syntax = "proto3";
+
+option java_package = "com.server.network";
+option java_outer_classname = "ClientProto";
+
+
+enum MESSAGE_TYPE {
+  MESSAGE_TYPE_INIT = 0;
+}
+
+// game-related protocol
+// the message definition that the client requests from the server
+enum CS {
+  INIT = 0;
+  BEGIN = 90000;
+
+  LOGIN_REQ = 90001;                //user login game request
+  LOGOUT_REQ = 90002;               //user logout request
+  HEARTBEAT_REQ = 90003;            //heartbeat request
+  ERROR_REQ = 90004;                //error message
+  GETUSERINFO_REQ = 90005;          //get user information request
+  UPUSERINFO_REQ = 90006;           //modify a user information request
+  GETUSERCATLIST_REQ = 90007;       //get the cat list request
+  GETCAT_REQ = 90008;               //obtain cat request
+  CATINFO_REQ = 90009;              //cat detail request
+  USERITEM_REQ = 90010;             //user backpack request
+  GETUSERTOOLS_REQ = 90011;         //gets all of the user's tool requests
+  GETCATHOUSEINFO_REQ = 90012;      //obtain a request for litter information
+  GETCATBOWLINFO_REQ = 90013;       //obtain cat box information request
+  GETCATWATERINFO_REQ = 90014;      //obtain cat basin cabinet information request
+  GETCATTOILETINFO_REQ = 90015;     //get a cat toilet information request
+  GETCATBOARDINFO_REQ = 90016;      //obtain the request for information about the cat scratching board
+  GETNOWTIME_REQ = 90017;           //gets the back-end current timestamp request
+  CATEAT_REQ = 90018;               //the cat triggers a feeding request
+  CATDRINK_REQ = 90019;             //cat triggers water request
+  CATCACTTION_REQ = 90020;          //cat triggers defecation request
+  CATCLEANBODY_REQ = 90021;         //cat triggers licking body request
+  CATSLEEP_REQ = 90022;             //cat triggers sleep request
+  CATSCRATCHINGPOST_REQ = 90023;    //the cat triggered the scratching board request
+  CATSICKJUDGE_REQ = 90024;         //cat triggers sick determination request
+  GMCODE_REQ = 90025;               //GMcommand request
+  USEPROPS_REQ = 90026;             //use item request
+  CLEANTOILET_REQ = 90027;          //housekeeping request
+  ADDWATER_REQ = 90028;             //add a water request to the basin cabinet
+  REPAIRBOARD_REQ = 90029;          //fixed cat scratch board durability request
+  UPCATLEVEL_REQ = 90030;           //upgrade cat request
+  GETCATFOODWAREHOUSE_REQ = 90031;  //obtain cat food warehouse request
+  GETCATLITTERWAREHOUSE_REQ = 90032;//get the litter warehouse request
+  REPLENISHCATFOOD_REQ = 90033;     //add cat food request
+  REPLENISHCATLITTER_REQ = 90034;   //add kitty litter request
+  STROKECAT_REQ = 90035;            //cat handling request
+  GETINTIMACYREWARD_REQ = 90039;    //get the intimacy claim rule request
+  RECEIVEINTIMACYREWARD_REQ = 90040;//get the intimacy reward request
+  PRODUCTLIST_REQ = 90041;          //item list request
+  BUYGOODS_REQ = 90042;             //purchase request
+  WATERUPLEVEL_REQ = 90043;         //cat basin upgrade request
+  BOARDUPLEVEL_REQ = 90044;         //upgrade request of the cat scratch board
+  BOWLUPLEVEL_REQ = 90045;          //cat box upgrade request
+  TOILETUPLEVEL_REQ = 90046;        //cat toilet upgrade request
+  HOUSEUPLEVEL_REQ = 90047;         //kitty upgrade request request
+  EXCHANGEAVATAR_REQ = 90048;       //equipment fragment exchange request
+  USERAVATARLIST_REQ = 90049;       //user equipment list request
+  WEARAVATAR_REQ = 90050;           //request for wearing equipment
+  REMOVINGAVATAR_REQ = 90051;       //unloading request
+  CATEXCREMENTUPLEVEL_REQ = 90052;  //request for upgrading cat poop capacity
+  CLEANCATEXCREMENT_REQ = 90053;    //empty cat toilet cat poop request
+  CATPLAY_REQ = 90054;              //use the cat prop request
+  CATACTION_REQ = 90055;            //smell、hand licking、rub one's feet、stomp request
+  CATCHANGEHEALTH_REQ = 90056;      //cats increase or decrease health requests
+  GETUSERTASK_REQ = 90057;          //obtain the daily task request of the current user
+  FINISHTASK_REQ = 90058;           //complete task request
+  STARTANSWER_REQ = 90059;          //answer request
+  SUBMITQUESTION_REQ = 90060;       //submit answer request
+  SICKCATLIST_REQ = 90061;          //list of cats admitted to the hospital
+  SICKTREATMENT_REQ = 90062;        //cure a sick cat request
+  ACCELERATETREATMENT_REQ = 90063;  //accelerated recovery request
+  STROKECATITEM_REQ = 90064;        //user lifting cat item list request
+  RECOVERSHELTER_REQ = 90065;       //recycle to shelter request
+  REDEEMCATLIST_REQ = 90066;        //a list of cat requests to be redeemed
+  REDEEM_REQ = 90067;               //request for redemption of shelter cat
+  PUTONSHELVE_REQ = 90068;         //shelf cat request
+  LOWERSHELVE_REQ = 90069;         //remove the cat request
+  PSCATSLISTBYUSER_REQ = 90070;     //request for cats listed at the current user's shelter
+  PSCATSLIST_REQ = 90071;           //cat list requests from all users of the shelter
+  ADOPTCAT_REQ = 90072;             //shelter cat adoption request
+  SICKREDUCTHEALTH_REQ = 90073;     //reduce health request after illness
+  SENDTOHOSPITAL_REQ = 90074;       //hospital request
+  TAKEITHOME_REQ = 90075;           //request to take home from hospital after treatment is completed
+  TREATMENTPRICE_REQ = 90076;       //cat accelerated cure price request
+  RECYCLEPROPS_REQ = 90077;         //item recovery request
+  USERFIELDLIST_REQ = 90078;        //user's vegetable patch list request
+  UNLOCKFIELD_REQ = 90079;          //unlock vegetable patch request
+  USERSEED_REQ = 90080;             //user-owned torrent list requests
+  SEED_REQ = 90081;                 //seed request
+  ATTACKCATLIST_REQ = 90082;        //offensive cat list request
+  ATTACK_REQ = 90083;               //request for attack
+  DEFENSECATLIST_REQ = 90084;       //defensive cat list request
+  DEFENSE_REQ = 90085;              //defensive call
+  ATTACKRECEIVE_REQ = 90086;        //stealing catgrass reward claim request
+  SICKCATINFO_REQ = 90087;          //sick cat details request
+  PICKUP_REQ = 90088;               //recovery request
+  GETCOOLING_REQ = 90089;           //gets user cooling request for cat handling
+  MOSTATTACK_REQ = 90090;           //multiple cats attack request
+  PLAYGROUNDCATLIST_REQ = 90091;    //get the playground cat list request
+  PLAYGROUND_REQ = 90092;           //make a request for fun activities
+  PLAYGROUNDRECEIVE_REQ = 90093;    //playground award claim request
+  MOSTPLAYGROUND_REQ = 90094;       //multiple cats to participate in playground activities request
+  PLAYGROUNDHISTORY_REQ = 90095;    //playground reward history request
+  MAIL_LIST_REQ = 90096;            //mailing list request
+  MAIL_RECEIVE_REQ = 90097;         //mail collection request
+  MAIL_READ_REQ = 90098;            //mail read request
+  MAIL_DELETE_REQ = 90099;          //mail deletion request
+  CATPLAY_COOLING_REQ = 90101;      //cooldown request using the cat lift item
+  PS_STATISTICS_REQ = 90102;        //shelter statistics request
+  ALLPLAYGROUNDRECEIVE_REQ = 90103; //playground rewards one-click claim request
+
+  END = 99999;
+}
+
+// the message definition that the server responds to the client
+enum SC {
+  HSC_S2C_INIT = 0;
+  HSC_S2C_BEGIN = 90000;
+
+  //room
+  LOGIN_ACK = 90001;                //the user logs in and responds
+  LOGOUT_ACK = 90002;               //the user logs out and responds
+  HEARTBEAT_ACK = 90003;            //heartbeat response
+  ERROR_ACK = 90004;                //error message response
+  GETUSERINFO_ACK = 90005;          //get user information response
+  UPUSERINFO_ACK = 90006;           //modify the user information response
+  GETUSERCATLIST_ACK = 90007;       //get the cat list response
+  GETCAT_ACK = 90008;               //obtain cat response
+  CATINFO_ACK = 90009;              //cat details response
+  USERITEM_ACK = 90010;             //user backpack response
+  GETUSERTOOLS_ACK = 90011;         //get all the tool responses from the user
+  GETCATHOUSEINFO_ACK = 90012;      //get the cat's nest information response
+  GETCATBOWLINFO_ACK = 90013;       //get the cat box message response
+  GETCATWATERINFO_ACK = 90014;      //get cat birdbath cabinet information response
+  GETCATTOILETINFO_ACK = 90015;     //get cat toilet message response
+  GETCATBOARDINFO_ACK = 90016;      //get the cat scratch board message response
+  GETNOWTIME_ACK = 90017;           //gets the back-end current timestamp response
+  CATEAT_ACK = 90018;               //cats trigger feeding responses
+  CATDRINK_ACK = 90019;             //the cat triggers a water response
+  CATCACTTION_ACK = 90020;          //cats trigger a defecation response
+  CATCLEANBODY_ACK = 90021;         //cats trigger body licking in response
+  CATSLEEP_ACK = 90022;             //cats trigger a sleep response
+  CATSCRATCHINGPOST_ACK = 90023;    //cat trigger scratching cat scratching board response
+  CATSICKJUDGE_ACK = 90024;         //cat triggers sick decision response
+  GMCODE_ACK = 90025;               //GMcommand response
+  USEPROPS_ACK = 90026;             //use props to respond
+  CLEANTOILET_ACK = 90027;          //clean the room response
+  ADDWATER_ACK = 90028;             //add water response to the basin cabinet
+  REPAIRBOARD_ACK = 90029;          //fixed cat scratch board durability response
+  UPCATLEVEL_ACK = 90030;           //upgraded cat response
+  GETCATFOODWAREHOUSE_ACK = 90031;  //obtain cat food warehouse response
+  GETCATLITTERWAREHOUSE_ACK = 90032;//get litter warehouse response
+  REPLENISHCATFOOD_ACK = 90033;     //add cat food response
+  REPLENISHCATLITTER_ACK = 90034;   //add cat litter response
+  STROKECAT_ACK = 90035;            //cat response
+  GETINTIMACYREWARD_ACK = 90039;    //get the intimacy get the rule response
+  RECEIVEINTIMACYREWARD_ACK = 90040;//get the intimacy reward response
+  PRODUCTLIST_ACK = 90041;          //merchandise list response
+  BUYGOODS_ACK = 90042;             //purchase response
+  WATERUPLEVEL_ACK = 90043;         //cat birdbath cabinet upgrade response
+  BOARDUPLEVEL_ACK = 90044;         //cat scratch board upgrade response
+  BOWLUPLEVEL_ACK = 90045;          //cat box upgrade response
+  TOILETUPLEVEL_ACK = 90046;        //cat toilet upgrade response
+  HOUSEUPLEVEL_ACK = 90047;         //the cat's nest escalates in response
+  EXCHANGEAVATAR_ACK = 90048;       //equip fragment exchange response
+  USERAVATARLIST_ACK = 90049;       //user equipment list response
+  WEARAVATAR_ACK = 90050;           //wearable response
+  REMOVINGAVATAR_ACK = 90051;       //disarming response
+  CATEXCREMENTUPLEVEL_ACK = 90052;  //cat poop capacity upgrade response
+  CLEANCATEXCREMENT_ACK = 90053;    //empty the cat toilet cat poop response
+  CATPLAY_ACK = 90054;              //respond with the cat prop
+  CATACTION_ACK = 90055;            //smell、hand licking、rub one's feet、milk response
+  CATCHANGEHEALTH_ACK = 90056;      //cats increase or decrease fitness response
+  GETUSERTASK_ACK = 90057;          //get the daily task response of the current user
+  FINISHTASK_ACK = 90058;           //complete task response
+  STARTANSWER_ACK = 90059;          //answer
+  SUBMITQUESTION_ACK = 90060;       //submit answer
+  SICKCATLIST_ACK = 90061;          //the sick cat list responds
+  SICKTREATMENT_ACK = 90062;        //cure sick cat response
+  ACCELERATETREATMENT_ACK = 90063;  //accelerated recovery response
+  STROKECATITEM_ACK = 90064;        //user masturbation item list response
+  RECOVERSHELTER_ACK = 90065;       //recycle to shelter response
+  REDEEMCATLIST_ACK = 90066;        //the list of cats that need to be redeemed responds
+  REDEEM_ACK = 90067;               //redemption shelter cat response
+  PUTONSHELVE_ACK = 90068;         //shelf cat response
+  LOWERSHELVE_ACK = 90069;         //off the shelf cat response
+  PSCATSLISTBYUSER_ACK = 90070;     //response to the current user's list of cats on shelter shelves
+  PSCATSLIST_ACK = 90071;           //response to a list of cats listed by all users at the shelter
+  ADOPTCAT_ACK = 90072;             //shelter adoption cat response
+  SICKREDUCTHEALTH_ACK = 90073;     //reduced health response after illness
+  SENDTOHOSPITAL_ACK = 90074;       //hospital response
+  TAKEITHOME_ACK = 90075;           //after the treatment is completed, take him home from the hospital to respond
+  TREATMENTPRICE_ACK = 90076;       //cat accelerated treatment price response
+  RECYCLEPROPS_ACK = 90077;         //recovery item response
+  USERFIELDLIST_ACK = 90078;        //the user's vegetable patch list responds
+  UNLOCKFIELD_ACK = 90079;          //unlock the vegetable patch response
+  USERSEED_ACK = 90080;             //user-owned torrent list responses
+  SEED_ACK = 90081;                 //seed response
+  ATTACKCATLIST_ACK = 90082;        //the attacking cat list responds
+  ATTACK_ACK = 90083;               //offensive response
+  DEFENSECATLIST_ACK = 90084;       //the defensive cat list responds
+  DEFENSE_ACK = 90085;              //defensive response
+  ATTACKRECEIVE_ACK = 90086;        //steal cat grass reward receive response
+  SICKCATINFO_ACK = 90087;          //sick cat details response
+  PICKUP_ACK = 90088;               //recovery response
+  GETCOOLING_ACK = 90089;           //get the cooling response of the user's cat action
+  MOSTATTACK_ACK = 90090;           //multiple cats attack and respond
+  PLAYGROUNDCATLIST_ACK = 90091;    //get playground cat list responses
+  PLAYGROUND_ACK = 90092;           //respond with fun activities
+  PLAYGROUNDRECEIVE_ACK = 90093;    //playground reward claim response
+  MOSTPLAYGROUND_ACK = 90094;       //multiple cats responded by participating in the playground activities
+  PLAYGROUNDHISTORY_ACK = 90095;    //playground rewards historical record response
+  MAIL_LIST_ACK = 90096;            //mailing list response
+  MAIL_RECEIVE_ACK = 90097;         //mail collection response
+  MAIL_READ_ACK = 90098;            //the email has been read and responded
+  MAIL_DELETE_ACK = 90099;          //email deletion response
+  MAIL_NEW_ACK = 90100;             //new email notification response
+  CATPLAY_COOLING_ACK = 90101;      //use the cooling response of the cat prop
+  PS_STATISTICS_ACK = 90102;        //shelter statistical response
+  ALLPLAYGROUNDRECEIVE_ACK = 90103; //playground reward one-click claim response
+
+}
+
+
+
+//user login game request  LOGIN_REQ
+message LoginReq {
+
+  //login token
+  string token = 1;
+
+  //userid
+  string userId = 2;
+}
+
+//user login game reply  LOGIN_ACK
+message LoginAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+}
+
+//user logout request  LOGOUT_REQ
+message LogoutReq {
+
+}
+
+//users log out of the game and reply  LOGOUT_ACK
+message LogoutAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //a player who logs out of the game
+  int64 user_id = 3;
+}
+
+//heartbeat request  HEARTBEAT_REQ
+message HeartbeatReq {
+}
+
+//heartbeat response  HEARTBEAT_ACK
+message HeartbeatAck {
+}
+
+//error message  ERROR_ACK
+message ErrorAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+}
+
+//get user information request GETUSERINFO_REQ
+message GetUserInfoReq {
+
+  //login token
+  string token = 1;
+
+}
+
+//get user information response GETUSERINFO_ACK
+message GetUserInfoAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+  //user name
+  string userName = 3;
+
+  //gender
+  int32 sex = 4;
+
+  //mailbox
+
+  string email = 5;
+
+  //wallet address
+  string walletAddress = 6;
+
+  //user type 1it's a tourist. 0is a regular user
+  int32 type = 7;
+
+  //charity value
+  int64 charitableValue = 8;
+
+  //password
+  string password = 9;
+}
+
+//modify a user information request UPUSERINFO_REQ
+message UpUserInfoReq {
+
+  //login token
+  string token = 1;
+
+  //user name
+  string userName = 2;
+
+  //gender
+  int32 sex = 3;
+
+  //mailbox
+
+  string email = 4;
+
+  //wallet address
+  string walletAddress = 5;
+
+  //password
+  string password = 6;
+}
+
+//modify the user information response UPUSERINFO_ACK
+message UpUserInfoAck {
+  //result
+  int32 code = 1;
+
+  //information
+  string message = 2;
+}
+//get the cat list request GETUSERCATLIST_REQ
+message GetUserCatListReq {
+
+  //login token
+  string token = 1;
+}
+
+//get the cat list response GETUSERCATLIST_ACK
+message GetUserCatListAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //cat list
+  repeated  CatModule catList = 3;
+  //if there is a sick cat 1 there are，0no
+  int32  hasSick = 4;
+}
+
+
+//obtain cat request GETCAT_REQ
+message GetCatReq {
+
+  //login token
+  string token = 1;
+
+  //the cat configuration library is obtainedid
+  int64 cat_id = 2;
+}
+
+//obtain cat response GETCAT_ACK
+message GetCatAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+}
+
+//cat detail request CATINFO_REQ
+message CatInfoReq {
+
+  //login token
+  string token = 1;
+  //the catid
+  int64 id = 2;
+}
+
+//cat details response CATINFO_ACK
+message CatInfoAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //cat details
+  CatModule catInfo = 3;
+}
+
+
+//cat object
+message CatModule {
+  //the catid
+  int64 catId = 1;
+
+  //personality 1independence 2clingy 3lively 4timid 5laziness
+  int32 character = 2;
+
+  //gender 1the male2the mother
+  int32 sex = 3;
+
+  //birthday
+  int64 birthday = 4;
+
+  //what generation of cats
+  int32 generation = 5;
+
+  //cat picture
+  string catImage = 6;
+
+  //cat name
+  string name = 7;
+
+
+  //grade
+  int32 level = 8;
+
+  //intimacy(numerical value)
+  int64 intimacy = 9;
+
+
+
+  //degree of growth(numerical value)
+  int64 growth = 10;
+
+  //health degree (numerical value)
+  int64 health = 11;
+
+  //current cleanliness time stamp(the value decreases over time when calculating the value，（maxCleanTime-nowCleanTime）/everyTimeCleanTime is the decreased cleanliness value)
+  int64 nowCleanTime = 12;
+
+  //the cleanliness time stamp of the full state(the current server time is used as the full value100)
+  int64 maxCleanTime = 13;
+
+  //upper limit of cleanliness(100，lower limit default0)
+  int32 maxCleanNumerial = 14;
+
+  //how many seconds does it take for each point to be clean
+  int64 everyTimeCleanTime = 15;
+
+  //how many seconds does it take to clean a room after it's dirty
+  int64 everyTimeDirtyCleanTime = 16;
+
+  //conditions that trigger grooming  (as long as the cleanliness is below50，every300trigger once per second)，the trigger condition is set to（4|50&9|300）,the rule is explained in the configuration table description
+  string cleanBodySetting = 17;
+
+
+  //satiety time stamp(the value decreases over time when calculating the value，（maxHungerTime-nowHungerTime）/everyTimeHungerTime is the decreased satiety value)
+  int64 nowHungerTime = 18;
+
+
+  //satiety at full state(time stamp，the current server time is used as the full value100)
+  int64 maxHungerTime = 19;
+
+  //upper limit of satiety(100，lower limit default0)
+  int32 maxHungerNumerial = 20;
+
+  //how many seconds does it take for each satiety point
+  int64 everyTimeHungerTime = 21;
+
+  //conditions that trigger eating  (as long as the satiety is below50and there was cat food in the cat box)，the trigger condition is set to（1|50&5）,the rule is explained in the configuration table description
+  string eatSetting = 22;
+
+  //thirst time stamp(the value decreases over time when calculating the value，（maxThirstyTime-nowThirstyTime）/everyTimeThirstyTime is decreased thirst)
+  int64 nowThirstyTime = 23;
+
+  //thirst time stamp for full state(the current server time is used as the full value100)
+  int64 maxThirstyTime = 24;
+
+  //upper limit of thirst(100，lower limit default0)
+  int32 maxThirstyNumerial = 25;
+
+  //how many seconds does it take for each thirst point
+  int64 everyTimeThirstyTime = 26;
+
+  //triggers drinking conditions  (as long as your thirst is belowX(numerical value)and there's a water trigger in the tank)，the trigger condition is set to（2|50&6）,the rule is explained in the configuration table description
+  string drinkSetting = 27;
+
+  //notice that this is everyNseconds plus a little poop value
+  //defecation value timestamp(incremental value over time when calculating a value，（maxDefecateTime-nowDefecateTime）/everyTimeDefecateTime is the current defecation value)
+  int64 nowDefecateTime = 28;
+
+
+  //defecation value of full state(time stamp，the current server time is used as the clear value0)
+  int64 maxDefecateTime = 29;
+
+  //upper limit of defecation value(100，lower limit default0)
+  int32 maxDefecateNumerial = 30;
+
+  //the number of seconds it takes for each point of defecation
+  int64 everyTimeDefecateTime = 31;
+
+  //conditions that trigger defecation  (full bowel value)，the trigger condition is set to（3）,the rule is explained in the configuration table description
+  string cacationSetting = 32;
+
+  //notice that this is everyNseconds plus a little desire to grind claws
+  //grinding claw desire time stamp(incremental value over time when calculating a value，（maxSharpenClawsTime-nowSharpenClawsTime）/everyTimeSharpenClawsTime for the current grinding claw desire value)
+  int64 nowSharpenClawsTime = 33;
+
+  //defecation value of full state(time stamp，the current server time is used as the clear value0)
+  int64 maxSharpenClawsTime = 34;
+
+  //upper limit of defecation value(100，lower limit default0)
+  int32 maxSharpenClawsNumerial = 35;
+
+  //the number of seconds it takes for each point of defecation
+  int64 everyTimeSharpenClawsTime = 36;
+
+  //trigger condition for sharpening claws  (sharpening the claw desire is worth full)，the trigger condition is set to（10）,the rule is explained in the configuration table description
+  string scratchingPostSetting = 37;
+
+  //triggers sleep conditions  (understrength10point)，the trigger condition is set to（11|10）,the rule is explained in the configuration table description
+  string sleepCatHouseSetting = 38;
+
+  //happiness value timestamp（the value decreases over time when calculating the value，（maxHappinessTime-nowHappinessTime）/everyTimeHappinessTime is the declining happiness value）
+  int64 nowHappinessTime = 39;
+
+
+  //the happiness of the full state(time stamp，the current server time is used as the full value100)
+  int64 maxHappinessTime = 40;
+
+  //upper limit of happiness value(100，lower limit default0)
+  int32 maxHappinessNumerial = 41;
+
+  //how many seconds does each happiness point take
+  int64 everyTimeHappinessTime = 42;
+
+  //physical strength value(numerical value)
+  int64 stamina = 43;
+
+  //the upper limit of physical strength(100，lower limit default0)
+  int64 maxStaminaNumerial = 44;
+
+  //charm value，gameplay attribute，default1level
+  double charm = 45;
+
+  //strong，gameplay attribute，default level 1 attribute
+  double strength = 46;
+
+  //charm growth rate，gameplay attribute
+  double charmAdd = 47;
+
+  //strong growth rate，gameplay attribute
+  double strengthAdd = 48;
+
+  //be ill ，not sick by default0,1mild disease，2severe case
+  int32 sick = 49;
+
+  //owning userid
+  int64 userId = 50;
+
+  //a list of the cat's offline behavior
+  repeated  CatBehaviorHistoryModule behaviorList = 51;
+
+  //the coefficient of age of the cat（it stands for the game1days are hours in the real world）
+  int32 ageCoefficient = 52;
+
+  //the amount of growth a cat needs to upgrade
+  int64 upLevelGrowth = 53;
+
+  //the type of money needed to upgrade the cat（proppropId）
+  int64 upLevelMoneyType = 54;
+
+  //the amount of money the cat needs to upgrade
+  int32 upLevelMoneyCount = 55;
+
+  //initial charm value
+  double basicsCharm = 56;
+
+  //initial strength
+  double basicsStrength = 57;
+
+  //whether they are being treated or not1is0no，the value is constant in the treatment state
+  int32 isTreat = 58;
+
+  //state0normal 1in the hospital 2stealing cat grass 3in defense of catgrass 4out 5in the playground
+  int32 status = 59;
+
+  //quality 1white 2green 3blue 4the purple 5gold
+  int32 quality = 60;
+
+  //maximum health (numerical value)
+  int64 maxHealth = 61;
+}
+//what the cat does when it's offline
+message CatBehaviorHistoryModule {
+
+  //userid
+  int64 userId = 1;
+
+  //the catid
+  int64 userCatId = 2;
+
+  //the time when the action is triggered
+  int64 behaviorTime = 3;
+
+  //triggered behavior （301：eat ，302：drink water，303：defecation ，305：lick the body ，306 ：sleep，307：play with the cat scratch board）
+  int64 actionId = 4;
+
+  //behavior description
+  string msg = 5;
+
+
+}
+
+
+
+//user backpack request USERITEM_REQ
+message UserItemReq {
+
+  //login token
+  string token = 1;
+
+}
+
+//user backpack response USERITEM_ACK
+message UserItemAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //backpack list
+  repeated ItemModule itemList = 3;
+
+  //list of cat food warehouses
+  repeated CatWareHouseModule foodList = 4;
+
+  //list of cat litter stores（the quality of the cat food warehouse）
+  repeated CatWareHouseModule litterList = 5;
+}
+
+message ItemModule {
+  //backpackid
+  int64 id = 1;
+
+  //item classification
+  int32 propType = 2;
+
+  //propid
+  int64 propId = 3;
+
+  //item quantity
+  int32 propCount = 4;
+
+  //durability currently, only the cat-teasing stick is in demand，every use1some durability
+  int32 durability = 5;
+
+  //type of sale
+  int64 saleType = 6;
+
+  //selling price
+  int64 saleCount = 7;
+}
+
+
+//gets all of the user's tool requests GETUSERTOOLS_REQ
+message GetUserToolsReq {
+
+  //login token
+  string token = 1;
+
+}
+
+//get all the tool responses from the user GETUSERTOOLS_ACK
+message GetUserToolsAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //cat's nest
+  CatHouseModule catHouse = 3;
+
+  //cat food bowl
+  CatBowlModule catBowl = 4;
+
+  //cat tank
+  CatWaterModule catWater = 5;
+
+  //cat scratching board
+  CatScratchingBoardModule catScratchingBoard = 6;
+
+  //cat toilet
+  CatToiletModule catToilet = 7;
+}
+
+//obtain a request for litter information GETCATHOUSEINFO_REQ
+message GetCatHouseInfoReq {
+
+  //login token
+  string token = 1;
+
+}
+
+//get the cat's nest information response GETCATHOUSEINFO_ACK
+message GetCatHouseInfoAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //cat's nest
+  CatHouseModule catHouse = 3;
+
+}
+
+//obtain cat box information request GETCATBOWLINFO_REQ
+message GetCatBowlInfoReq {
+
+  //login token
+  string token = 1;
+
+}
+
+//get the cat box message response GETCATBOWLINFO_ACK
+message GetCatBowlInfoAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //cat box
+  CatBowlModule catBowl = 3;
+
+}
+
+//obtain cat basin cabinet information request GETCATWATERINFO_REQ
+message GetCatWaterInfoReq {
+
+  //login token
+  string token = 1;
+
+}
+
+//get cat birdbath cabinet information response GETCATWATERINFO_ACK
+message GetCatWaterInfoAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //cat basin cabinet
+  CatWaterModule catWater = 3;
+
+}
+
+//get a cat toilet information request GETCATTOILETINFO_REQ
+message GetCatToiletInfoReq {
+
+  //login token
+  string token = 1;
+
+}
+//get cat toilet message response GETCATTOILETINFO_ACK
+message GetCatToiletInfoAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //cat toilet
+  CatToiletModule catToilet = 3;
+
+}
+
+//obtain the request for information about the cat scratching board GETCATBOARDINFO_REQ
+message GetCatBoardInfoReq {
+
+  //login token
+  string token = 1;
+
+}
+//get the cat scratch board message response GETCATBOARDINFO_ACK
+message GetCatBoardInfoAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //cat scratching board
+  CatScratchingBoardModule catBoard = 3;
+
+}
+
+//cat's nest
+message CatHouseModule {
+  //id
+  int64 id = 1;
+
+  //userid
+  int64 userId = 2;
+
+  //tool level
+  int64 toolLevel = 3;
+
+
+
+  //the type of money needed for the upgrade（proppropId）
+  int64 upLevelMoneyType = 4;
+
+  //the amount of money needed to upgrade
+  int32 upLevelMoneyCount = 5;
+
+  //detailed configuration，every number of seconds
+  int32 ruleTime = 6;
+
+  //how much strength is restored
+  int32 ruleRecovery = 7;
+}
+//cat food bowl
+message CatBowlModule {
+  //id
+  int64 id = 1;
+
+  //userid
+  int64 userId = 2;
+
+  //tool level
+  int64 toolLevel = 3;
+
+  // total cat food
+  int64 sumVolume = 4;
+
+  //surplus cat food
+  int64 surplusVolume = 5;
+
+  // the rest of the cat food detailed configuration
+  string surplusVolumeDetail = 6;
+
+  //the type of money needed for the upgrade（proppropId）
+  int64 upLevelMoneyType = 7;
+
+  //the amount of money needed to upgrade
+  int32 upLevelMoneyCount = 8;
+
+
+  //the warehouse where the cat food was last addedid
+  int64 wareHouseId = 9;
+}
+
+//cat tank
+message CatWaterModule {
+  //id
+  int64 id = 1;
+
+  //userid
+  int64 userId = 2;
+
+  //tool level
+  int64 toolLevel = 3;
+
+  // total capacity
+  int64 sumVolume = 4;
+
+  //residual water capacity
+  int64 surplusVolume = 5;
+
+  // configure the remaining capacity
+  string surplusVolumeDetail = 6;
+
+  //the type of money needed for the upgrade（proppropId）
+  int64 upLevelMoneyType = 7;
+
+  //the amount of money needed to upgrade
+  int32 upLevelMoneyCount = 8;
+}
+//cat scratching board
+message CatScratchingBoardModule {
+  //id
+  int64 id = 1;
+
+  //userid
+  int64 userId = 2;
+
+  //tool level
+  int64 toolLevel = 3;
+
+  // overall durability
+  int64 sumVolume = 4;
+
+  //residual durability
+  int64 surplusVolume = 5;
+
+  // the remaining durability is configured in detail
+  string surplusVolumeDetail = 6;
+
+  //the type of money needed for the upgrade（proppropId）
+  int64 upLevelMoneyType = 7;
+
+  //the amount of money needed to upgrade
+  int32 upLevelMoneyCount = 8;
+
+  //money needed to fix current durability
+  int64 repairMoneyCount = 9;
+
+
+  //the type of money needed to fix the current durability
+  int64 repairMoneyType = 10;
+}
+//cat toilet
+message CatToiletModule {
+  //id
+  int64 id = 1;
+
+  //userid
+  int64 userId = 2;
+
+  //tool level
+  int64 toolLevel = 3;
+
+  // total litter
+  int64 sumVolume = 4;
+
+  //surplus cat litter
+  int64 surplusVolume = 5;
+
+  // detailed configuration of the remaining cat litter
+  string surplusVolumeDetail = 6;
+
+  //the amount of dirty cat poop，greater than0it means dirty
+  int32 dirtyCount = 7;
+
+  //dirty time
+  int64 dirtyTime = 8;
+
+  //the type of money needed to upgrade the litter（proppropId）
+  int64 upLevelMoneyType = 9;
+
+  //the amount of money needed to upgrade the litter
+  int32 upLevelMoneyCount = 10;
+
+  //the warehouse where the cat food was last addedid
+  int64 wareHouseId = 11;
+
+  //maximum capacity of cat feces in cat litter in cat toilet
+  int32 sumCatExcrement = 12;
+
+  //the amount of cat poop in cat toilet litter，if it's full, it needs to be cleaned，otherwise, even cat litter will dirty the room
+  int32 catExcrement = 13;
+
+
+  //cat poop capacity class
+  int64 excrementLevel = 14;
+
+  //type of money needed to upgrade cat poop capacity（proppropId）
+  int64 upExcrementLevelMoneyType = 15;
+
+  //the amount of money needed to upgrade the cat poop capacity
+  int32 upExcrementLevelMoneyCount = 16;
+
+  //money to clean up the shit in the house
+  int64 cleanMoneyCount = 17;
+  //the type of money needed to clean up the shit in the house
+  int64 cleanMoneyType = 18;
+}
+
+//gets the current backend timestamp GETNOWTIME_REQ
+message GetNowTimeReq {
+
+  //login token
+  string token = 1;
+
+}
+//gets the back-end current timestamp response GETNOWTIME_ACK
+message GetNowTimeAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //current timestamp
+  int64 nowTime = 3;
+
+}
+
+
+
+//the cat triggers a feeding request CATEAT_REQ
+message CatEatReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64 catId = 2 ;
+
+}
+//cats trigger feeding responses CATEAT_ACK
+message CatEatAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //increased satiety time stamp after eating（add this value to the current satiety time stamp to create the most recent value）
+  int64 addHungerTime = 3;
+
+  //the amount of health that increases after eating（take the current health of the cat plus this value to get the latest value）
+  int64 addHealth = 4;
+
+  //the amount of cat food to be eaten at one time
+  int32 reduceCount = 5;
+
+  //increased growth after eating（take the current growth of the cat plus this value to get the latest value）
+  int64 addGrowth = 6;
+
+  //the catid
+  int64 catId = 7;
+
+
+}
+
+//cat triggers water request CATDRINK_REQ
+message CatDrinkReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64 catId = 2 ;
+
+}
+//the cat triggers a water response CATDRINK_ACK
+message CatDrinkAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //increased thirst time stamp after drinking water（add this value to your cat's current thirst time stamp to get the most recent value）
+  int64 addThirstyTime = 3;
+
+  //the amount of health increase after drinking water（take the current health of the cat plus this value to get the latest value）
+  int64 addHealth = 4;
+
+
+  //the amount of water held in one drink
+  int32 reduceCount = 5;
+
+  //increased growth after drinking water（take the current growth of the cat plus this value to get the latest value）
+  int64 addGrowth = 6;
+
+
+  //the catid
+  int64 catId = 7;
+}
+
+//cat triggers defecation request CATCACTTION_REQ
+message CatCacationReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64 catId = 2 ;
+
+}
+//cats trigger a defecation response CATCACTTION_ACK
+message CatCacationAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //increased defecation time stamp after defecation（add this value to the current cat defecation time stamp to get the most recent value）
+  int64 addDefecateTime = 3;
+
+
+  //the amount of litter reduced at a time
+  int32 reduceCount = 4;
+
+  //the increased amount of feces in a cat's toilet
+  int32 dirtyCount = 5;
+
+
+  //the catid
+  int64 catId = 6;
+
+}
+
+//cat triggers licking body request CATCLEANBODY_REQ
+message CatCleanBodyReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64 catId = 2 ;
+
+}
+//cats trigger body licking in response CATCLEANBODY_ACK
+message CatCleanBodyAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //time stamp of increased cleanliness after licking body（add this value to the current cat's cleanliness timestamp to get the latest value）
+  int64 addCleanTime = 3;
+
+  //the amount of health increased by licking the body（take the current health of the cat plus this value to get the latest value）
+  int64 addHealth = 4;
+
+  //licking increases the growth of the body（take the current growth of the cat plus this value to get the latest value）
+  int64 addGrowth = 6;
+
+
+  //the catid
+  int64 catId = 7;
+
+}
+
+//cat triggers sleep request CATSLEEP_REQ
+message CatSleepReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64 catId = 2 ;
+
+}
+//cats trigger a sleep response CATSLEEP_ACK
+message CatSleepAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //increased physical discipline during sleep（a|b）everyasecond recoverybpoint strength
+  int64 addStamina = 3;
+
+
+  //the catid
+  int64 catId = 4;
+
+}
+
+//the cat triggered the scratching board request CATSCRATCHINGPOST_REQ
+message CatScratchingPostReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64 catId = 2 ;
+
+}
+//cat trigger scratching cat scratching board response CATSCRATCHINGPOST_ACK
+message CatScratchingPostAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //scratching the cat scratch board increases the amount of time stamp after grinding the claw desire（add this value to the current cat's paw desire time stamp to get the latest value）
+  int64 addSharpenClawsTime = 3;
+
+
+  //the amount of durability that the cat scratches at a time reduces
+  int32 reduceCount = 4;
+
+
+  //the catid
+  int64 catId = 5;
+
+}
+
+//cat triggers sick determination request CATSICKJUDGE_REQ
+message CatSickJudgeReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64 catId = 2 ;
+
+}
+//cat triggers sick decision response CATSICKJUDGE_ACK
+message CatSickJudgeAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //whether you are sick or not，0not ill 1mild disease 2severe case
+  int64 isSick = 3;
+
+
+  //the catid
+  int64 catId = 4;
+
+}
+
+
+//GMcommand request GMCODE_REQ
+message GMCodeReq {
+
+  //login token
+  string token = 1;
+
+  //command format code ,such as obtainingpawthe coin100a addPaw:100,obtainzoothe coin100a addZoo:100,get an item99a getPorp:propid|99,full props999 allPorp:999,
+  //refresh static library cleanStaticLibrary , get a cat  getCat:cat configuration tableid , increase charity value100 addCharitable:100 , increases the growth of a cat100 addGrowth:the catid|100
+  string code = 2 ;
+
+}
+//GMcommand response GMCODE_ACK
+message GMCodeAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+}
+
+//use item request USEPROPS_REQ
+message UsePropsReq {
+
+  //login token
+  string token = 1;
+
+  //backpackid
+  int64 itemId = 2 ;
+
+  //quantity used
+  int32 useCount = 3;
+
+}
+//use props to respond USEPROPS_ACK
+message UsePropsAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //list of the latest backpack props
+  repeated ItemModule items = 3;
+}
+
+
+//housekeeping request CLEANTOILET_REQ
+message CleanToiletReq {
+
+  //login token
+  string token = 1;
+
+}
+//clean the room response CLEANTOILET_ACK
+message CleanToiletAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+
+  //the amount of cat poop removed
+  int32 reduceCount = 3;
+
+  //added charity value
+  int64 addCsCount = 4;
+
+  //reduced list of backpack items,reduce money
+  repeated ReduceItemModule items = 5;
+
+}
+
+
+//add a water request to the basin cabinet ADDWATER_REQ
+message AddWaterReq {
+
+  //login token
+  string token = 1;
+
+}
+//add water response to the basin cabinet ADDWATER_ACK
+message AddWaterAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //added water
+  int64 addCount = 3;
+
+  //added charity value
+  int64 addCsCount = 4;
+
+}
+
+//fixed cat scratch board durability request REPAIRBOARD_REQ
+message RepairBoardReq {
+
+  //login token
+  string token = 1;
+
+}
+//fixed cat scratch board durability response REPAIRBOARD_ACK
+message RepairBoardAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //added durability of the cat scratch board
+  int32 addCount = 3;
+
+  //added charity value
+  int64 addCsCount = 4;
+
+  //reduced list of backpack items,reduce money
+  repeated ReduceItemModule items = 5;
+
+}
+
+//upgrade cat request UPCATLEVEL_REQ
+message UpCatLevelReq {
+
+  //login token
+  string token = 1;
+
+  int64 catId = 2;
+
+}
+//upgraded cat response UPCATLEVEL_ACK
+message UpCatLevelAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //reduced growth
+  int64 reduceGrowthCount = 3;
+
+  //incremental series
+  int32 addLevel = 4;
+
+  //increased attractiveness
+  double addCharm = 5;
+
+  //increased strength
+  double addStrength = 6;
+
+  //reduced list of backpack items,reduce money
+  repeated ReduceItemModule items = 7;
+
+
+  //the catid
+  int64 catId = 8;
+
+
+}
+
+
+//obtain cat food warehouse request GETCATFOODWAREHOUSE_REQ
+message GetCatFoodWareHouseReq {
+
+  //login token
+  string token = 1;
+
+}
+//obtain cat food warehouse response GETCATFOODWAREHOUSE_ACK
+message GetCatFoodWareHouseAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //warehouse list（the quality of the cat food warehouse）
+  repeated CatWareHouseModule houseList = 3;
+
+}
+
+//get the litter warehouse request GETCATLITTERWAREHOUSE_REQ
+message GetCatLitterWareHouseReq {
+
+  //login token
+  string token = 1;
+
+}
+//get litter warehouse response GETCATLITTERWAREHOUSE_ACK
+message GetCatLitterWareHouseAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //list of cat litter stores （the quality of the litter warehouse）
+  repeated CatWareHouseModule houseList = 3;
+
+}
+//warehouse object
+message CatWareHouseModule {
+  //id
+  int64 id = 1;
+
+  //userid
+  int64 userId = 2;
+
+  //warehouse type 1cat food 2cat litter
+  int32 warehouseType = 3;
+
+  // quantity
+  int64 propCount = 4;
+
+  //brand name
+  string brandName = 5;
+
+  //brandid
+  int64 brandId = 6;
+
+}
+//reduce item objects
+message ReduceItemModule {
+  //id
+  int64 id = 1;
+
+  // quantity
+  int64 propCount = 2;
+
+  //reduced durability
+  int32 reduceDurability = 3;
+}
+//add cat food request REPLENISHCATFOOD_REQ
+message ReplenishCatFoodReq {
+
+  //login token
+  string token = 1;
+
+  //warehouseid
+  int64 wareHouseId = 2;
+
+  //add quantity
+  int64  addCount = 3;
+
+}
+//add cat food response REPLENISHCATFOOD_ACK
+message ReplenishCatFoodAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //the addition of cat food to the cat box(the warehouse needs to reduce this quantity)
+  int64 addFoodCount = 3;
+
+  //added charity value
+  int64 addCsCount = 4;
+
+
+}
+
+//add kitty litter request REPLENISHCATLITTER_REQ
+message ReplenishCatLitterReq {
+
+  //login token
+  string token = 1;
+
+  //warehouseid
+  int64 wareHouseId = 2;
+
+  //add quantity
+  int64  addCount = 3;
+
+}
+//add cat litter response REPLENISHCATLITTER_ACK
+message ReplenishCatLitterAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //cat litter added to cat toilet(the warehouse needs to reduce this quantity)
+  int64 addLitterCount = 3;
+
+  //added charity value
+  int64 addCsCount = 4;
+
+}
+
+
+
+//cat handling request STROKECAT_REQ
+message StrokeCatReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64 catId = 2;
+
+  //type of cat 1 head  2 body 3butt
+  int32  strokeType = 3;
+
+}
+//cat response STROKECAT_ACK
+message StrokeCatAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //increased happiness value time rub
+  int64 addHappiness = 3;
+
+  //added charity value
+  int64 addCsCount = 4;
+
+
+  //the catid
+  int64 catId = 5;
+
+}
+
+
+//get the intimacy claim rule request GETINTIMACYREWARD_REQ
+message GetIntimacyRewardReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64  catId = 2;
+
+}
+//get the intimacy get the rule response GETINTIMACYREWARD_ACK
+message GetIntimacyRewardAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //list of intimacy rules
+  repeated IntimacyRewardModule rewards = 3;
+
+
+  //the catid
+  int64 catId = 4;
+
+}
+
+//intimacy rule object
+message IntimacyRewardModule {
+  //id
+  int64 rewardId = 1;
+
+  //need intimacy
+  int64 needIntimacy = 2;
+
+  //have you received it? 1is 0no
+  int32 isReceived = 3;
+}
+
+
+
+
+
+//get the intimacy reward request RECEIVEINTIMACYREWARD_REQ
+message ReceiveIntimacyRewardReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64  catId = 2;
+
+  //claim ruleid
+  int64  rewardId = 3;
+
+}
+//get the intimacy reward response RECEIVEINTIMACYREWARD_ACK
+message ReceiveIntimacyRewardAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //list of the latest backpack props
+  repeated ItemModule items = 3;
+
+  //awarded
+  repeated GetPropsModule pmList = 4;
+
+
+  //the catid
+  int64 catId = 5;
+
+}
+
+
+
+//item list request PRODUCTLIST_REQ
+message ProducListReq {
+
+  //login token
+  string token = 1;
+
+
+}
+//merchandise list response PRODUCTLIST_ACK
+message ProducListAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //latest merchandise list
+  repeated ProducModule  producs = 3;
+
+}
+
+//commodity list
+message ProducModule {
+  //commodityproducId
+  int64 id = 1;
+
+  //tab
+  int32 tab = 2;
+  //classification(useless)
+  int32 type = 3;
+
+  //propid
+  int64 propId = 4;
+
+  //item sequence
+  int32 shopIndex = 5;
+
+  //shelf time(useless)
+  int64 limitTime = 6;
+
+  //takedown time(useless)
+  int64 offTime = 7;
+
+  //number of purchases 0 stand for infinity
+  int32 limitBuy = 8;
+
+  //the amount this user has purchased，if inlimitBuydo not do0in the case of，buying requires judgment（buycount+purchase quantity）not exceedlimitBuy
+  int32 buyCount = 9;
+
+  //items to be consumed at the time of purchaseid
+  int64 costPropId = 10;
+
+  //the number of items needed to be purchased
+  int64 costCount = 11;
+
+  //number of items on sale
+  int64 saleCount = 12;
+
+  //whether to recommend 1be recommended(useless)
+  int32 recommend = 13;
+
+  //prop tips
+  string tips = 14 ;
+
+  //picture
+  string pic = 15 ;
+
+}
+
+
+//purchase request BUYGOODS_REQ
+message BuyGoodsReq {
+
+  //login token
+  string token = 1;
+
+  //commodityid
+  int64  goodId = 2;
+
+  //purchase quantity
+  int64  count = 3;
+
+}
+//purchase response BUYGOODS_ACK
+message BuyGoodsAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //the number of successful purchases
+  int32 addBuyCount = 3;
+
+  //list of the latest backpack props
+  repeated ItemModule items = 4;
+
+  //number of grams of cat food obtained
+  int64 foodCount = 5;
+  //the number of grams of litter obtained
+  int64 litterCount = 6;
+}
+
+//cat basin upgrade request WATERUPLEVEL_REQ
+message WaterUpLevelReq {
+
+  //login token
+  string token = 1;
+
+  //basin tankid
+  int64  waterId = 2;
+
+
+}
+//cat birdbath cabinet upgrade response WATERUPLEVEL_ACK
+message WaterUpLevelAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //latest birdbath cabinet properties
+  CatWaterModule tool = 3;
+
+  //added charity value
+  int64 addCsCount = 4;
+}
+
+//upgrade request of the cat scratch board BOARDUPLEVEL_REQ
+message BoardUpLevelReq {
+
+  //login token
+  string token = 1;
+
+  //cat scratching boardid
+  int64  boardId = 2;
+
+
+}
+//cat scratch board upgrade upgrade response BOARDUPLEVEL_ACK
+message BoardUpLevelAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //the latest cat scratch board properties
+  CatScratchingBoardModule tool = 3;
+
+  //added charity value
+  int64 addCsCount = 4;
+}
+
+
+//cat box upgrade request BOWLUPLEVEL_REQ
+message BowlUpLevelReq {
+
+  //login token
+  string token = 1;
+
+  //cat boxid
+  int64  bowlId = 2;
+
+
+}
+//cat box upgrade response BOWLUPLEVEL_ACK
+message BowlUpLevelAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //the latest cat box properties
+  CatBowlModule tool = 3;
+
+  //added charity value
+  int64 addCsCount = 4;
+}
+
+//cat toilet upgrade request TOILETUPLEVEL_REQ
+message ToiletUpLevelReq {
+
+  //login token
+  string token = 1;
+
+  //cat toiletid
+  int64  toiletId = 2;
+
+
+}
+//cat toilet upgrade response TOILETUPLEVEL_ACK
+message ToiletUpLevelAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //the latest cat toilet properties
+  CatToiletModule tool = 3;
+
+  //added charity value
+  int64 addCsCount = 4;
+}
+
+
+//kitty upgrade request HOUSEUPLEVEL_REQ
+message HouseUpLevelReq {
+
+  //login token
+  string token = 1;
+
+  //cat's nestid
+  int64  houseId = 2;
+
+
+}
+//the cat's nest escalates in response HOUSEUPLEVEL_ACK
+message HouseUpLevelAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //latest litter properties
+  CatHouseModule tool = 3;
+
+  //added charity value
+  int64 addCsCount = 4;
+}
+
+
+//equipment fragment exchange request EXCHANGEAVATAR_REQ
+message ExchangeAvatarReq {
+
+  //login token
+  string token = 1;
+
+  //commodityid
+  int64  propId = 2;
+
+
+}
+//equip fragment exchange response EXCHANGEAVATAR_ACK
+message ExchangeAvatarAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //latest equipment list
+  repeated AvatarModule tool = 3;
+}
+
+//user equipment list request USERAVATARLIST_REQ
+message UserAvatarListReq {
+
+  //login token
+  string token = 1;
+
+}
+//user equipment list response USERAVATARLIST_ACK
+message UserAvatarListAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //latest equipment list
+  repeated AvatarModule avatar = 3;
+}
+
+
+//equipment
+message AvatarModule {
+  //equipment listId
+  int64 id = 1;
+
+  //equipment configuration tableid
+  int64 avatarId = 2;
+
+  //owning userid
+  int64 userId = 3;
+
+  //kitted catid
+  int64 catId = 4;
+
+
+}
+
+
+//request for wearing equipment WEARAVATAR_REQ
+message WearAvatarReq {
+
+  //login token
+  string token = 1;
+
+  //equipment listid
+  int64  id = 2;
+
+  //kitted catID
+  int64 catId = 3;
+
+
+}
+//wearable response WEARAVATAR_ACK
+message WearAvatarAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //kit cat details
+  CatModule catInfo = 3;
+
+
+  //the catid
+  int64 catId = 4;
+}
+
+//unloading request REMOVINGAVATAR_REQ
+message RemovingAvatarReq {
+
+  //login token
+  string token = 1;
+
+  //equipment listid
+  int64  id = 2;
+
+  //unload the equipment of the catID
+  int64 catId = 3;
+
+
+}
+//disarming response REMOVINGAVATAR_ACK
+message RemovingAvatarAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //unload equipment for cat details
+  CatModule catInfo = 3;
+
+
+  //the catid
+  int64 catId = 4;
+}
+
+
+
+//request for upgrading cat poop capacity CATEXCREMENTUPLEVEL_REQ
+message CatExcrementUpLevelReq {
+
+  //login token
+  string token = 1;
+
+  //cat toiletid
+  int64  toiletId = 2;
+
+
+}
+//cat poop capacity upgrade response CATEXCREMENTUPLEVEL_ACK
+message CatExcrementUpLevelAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //the latest cat toilet properties
+  CatToiletModule tool = 3;
+}
+
+//empty cat toilet cat poop request CLEANCATEXCREMENT_REQ
+message CleanExcrementReq {
+
+  //login token
+  string token = 1;
+
+}
+//empty the cat toilet cat poop response CLEANCATEXCREMENT_ACK
+message CleanExcrementAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+
+  //the amount of cat poop in the litter box that has been removed
+  int32 reduceExcrementCount = 3;
+
+  //added charity value
+  int64 addCsCount = 4;
+
+
+}
+
+//use the cat prop request CATPLAY_REQ
+message CatPlayReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64 catId = 2;
+
+  //behaviorid （cat-teasing stick 1004 cat feeding strip 1005 catgrass 1006 comb 1013 play ball1014 ）
+  int64 playId = 3;
+
+  //cat propid (no props are needed for grooming，everything else requires props)
+  int64 propId = 4 ;
+}
+//respond with the cat prop CATPLAY_ACK
+message CatPlayAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //increased happiness value timestamp
+  int64 addHappiness = 3;
+
+  //added charity value
+  int64 addCsCount = 4;
+
+
+  //the catid
+  int64 catId = 5;
+
+}
+
+//smell、hand licking、rub one's feet、stomp request CATACTION_REQ
+message CatActionReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64 catId = 2;
+
+  //actionid （smell401、hand licking402 rub one's feet403 step on milk404）
+  int64 actionId = 3;
+}
+//smell、hand licking、rub one's feet、milk response CATACTION_ACK
+message CatActionAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //increased happiness value timestamp
+  int64 addHappiness = 3;
+
+
+  //the catid
+  int64 catId = 4;
+
+
+}
+
+
+//cats increase or decrease health requests  CATCHANGEHEALTH_REQ
+message CatChangeHealthReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64 catId = 2;
+
+  //the amount of health gained or lost，minus is negative
+  int64 count = 3;
+}
+//cats increase or decrease fitness response CATCHANGEHEALTH_ACK
+message CatChangeHealthAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //the amount of health gained or lost，minus is negative
+  int64 count = 3;
+
+  //licking increases the growth of the body（take the current growth of the cat plus this value to get the latest value）
+  int64 addGrowth = 4;
+
+
+  //the catid
+  int64 catId = 5;
+
+
+}
+
+
+
+//obtain the daily task request of the current user  GETUSERTASK_REQ
+message GetUserTaskReq {
+
+  //login token
+  string token = 1;
+
+}
+//get the daily task response of the current user GETUSERTASK_ACK
+message GetUserTaskAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  repeated TaskModule taskList = 3;
+
+
+}
+//task object
+message TaskModule{
+  //task configuration tableid
+  int64 taskId = 1;
+
+  //whether the reward has been received 1is0no
+  int32 isReceived = 2;
+
+  //the number of times it needs to be done
+  int32 sumCount = 3;
+
+  //number of times completed
+  int32 finishCount = 4;
+}
+
+
+//complete task request  FINISHTASK_REQ
+message FinishTaskReq {
+
+  //login token
+  string token = 1;
+
+  int64 taskId = 2;
+
+}
+//complete task response FINISHTASK_ACK
+message FinishTaskAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //a reward for completing a task
+  repeated GetPropsModule pmList = 3;
+
+
+}
+
+
+
+
+
+//answer request  STARTANSWER_REQ
+message StartAnswerReq {
+
+  //login token
+  string token = 1;
+
+}
+//answer STARTANSWER_ACK
+message StartAnswerAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+
+
+  //questionnaire configuration libraryquestiontheid，the configuration library rewards and total number of questions can be queried
+  int64 questionId = 3;
+
+  //answer state0representative not answered 1 representative answer 2indicates that the answer has been completed today
+  int32  answerStatus = 4 ;
+
+  //so we've got a few questions
+  int32  finishCount = 5 ;
+
+  //a list of generated topics
+  repeated QuestionModule questionList = 6;
+
+
+}
+//task object
+message QuestionModule{
+  //serial number
+  int32 orderNum = 1;
+  //title
+  string intro = 2;
+
+  //optiona
+  string optionA = 3;
+
+  //optionb
+  string optionB = 4;
+
+  //optionC
+  string optionC = 5;
+
+  //optionD
+  string optionD = 6;
+
+
+  //answer  ABCD
+  string correntAnswer = 7;
+
+  //the option selected by the user   ABCD
+  string chooseOption = 8;
+}
+
+//submit answer request  SUBMITQUESTION_REQ
+message SubmitQuestionReq {
+
+  //login token
+  string token = 1;
+
+  //the serial number of the submitted topic
+  int32 orderNum = 2;
+
+  //the option selected by the user   ABCD
+  string chooseOption = 3;
+
+}
+//submit answer SUBMITQUESTION_ACK
+message SubmitQuestionAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+
+  //rewards for answering questions
+  repeated GetPropsModule pmList = 3;
+
+
+}
+
+
+//list of cats admitted to the hospital SICKCATLIST_REQ
+message SickCatListReq {
+
+  //login token
+  string token = 1;
+}
+
+//a list of cats admitted to the hospital SICKCATLIST_ACK
+message SickCatListAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //a list of sick cats
+  repeated  SickCatModule catList = 3;
+}
+
+//a request for treatment of illness SICKTREATMENT_REQ
+message SickTreatmentReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64 catId = 2;
+
+
+}
+
+//the response to treating an illness SICKTREATMENT_ACK
+message SickTreatmentAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //refresh the cat's status，treatment status:
+  SickCatModule catInfo = 3;
+
+  //added charity value
+  int64 addCsCount = 4;
+
+
+  //the catid
+  int64 catId = 5;
+
+}
+
+
+//accelerated recovery request ACCELERATETREATMENT_REQ
+message AccelerateTreatmentReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64 catId = 2;
+
+
+}
+
+//accelerated recovery response ACCELERATETREATMENT_ACK
+message AccelerateTreatmentAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //the amount of money reduced
+  int64  dirtyMoney = 3;
+
+  //refresh the cat's status
+  SickCatModule catInfo = 4;
+
+
+  //the catid
+  int64 catId = 5;
+
+}
+//sick cat object
+message SickCatModule {
+  //the catid
+  int64 catId = 1;
+
+  //personality 1independence 2clingy 3lively 4timid 5laziness
+  int32 character = 2;
+
+  //gender 1the male2the mother
+  int32 sex = 3;
+
+
+  //cat picture
+  string catImage = 4;
+
+  //cat name
+  string name = 5;
+
+
+  //grade
+  int32 level = 6;
+
+  //intimacy(numerical value)
+  int64 intimacy = 7;
+
+
+  //be ill ，not sick by default0,1mild disease，2severe case
+  int32 sick = 8;
+
+  //whether to start treatment  0 untreated 1in treatment  2completion of treatment
+  int32 hasTreat = 9;
+
+  //start treatment time stamp
+  int64 startTreatTime = 10 ;
+  //treatment remaining time stamp，countdown to0the restore once interface is called
+  int64 treatmentTime = 11;
+
+  //the amount of money needed to start treatment
+  int64 needMoney = 12;
+
+  //type of money
+  int64 moneyType = 13;
+
+  //quality 1white 2green 3blue 4the purple 5gold
+  int32 quality = 14;
+
+
+}
+
+//get an item
+message  GetPropsModule{
+
+  //type
+  int32 type = 1;
+
+  //object or catidor cat behaviorid
+  int64 id = 2;
+
+  //the number of objects or cats,behavior has no quantity
+  int64 count = 3;
+
+  //reward time
+  int64 time = 4;
+}
+
+
+message  DirtyPropsModule{
+
+  //type  1money 2prop
+  int32 type = 1;
+
+  //object or catid
+  int64 id = 2;
+
+  //the number of objects or cats
+  int64 count = 3;
+}
+
+
+//user lifting cat item list request STROKECATITEM_REQ
+message StrokeCatItemReq {
+
+  //login token
+  string token = 1;
+
+}
+
+//user masturbation item list response STROKECATITEM_ACK
+message StrokeCatItemAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //list of cat lifting items
+  repeated StrokeCatPropModule propList = 3;
+
+}
+
+
+message StrokeCatPropModule {
+
+  //item classification
+  int32 propType = 1;
+
+  //propid
+  int64 propId = 2;
+
+  //item quantity
+  int64 propCount = 3;
+
+}
+
+//exchange cat object
+message ShelterCatModule {
+  //exchangeid
+  int64 shelterId = 1;
+  //the catid
+  int64 catId = 2;
+
+  //personality 1independence 2clingy 3lively 4timid 5laziness
+  int32 character = 3;
+
+  //gender 1the male2the mother
+  int32 sex = 4;
+
+  //birthday
+  int64 birthday = 5;
+
+  //what generation of cats
+  int32 generation = 6;
+
+  //cat picture
+  string catImage = 7;
+
+  //cat name
+  string name = 8;
+
+
+  //grade
+  int32 level = 9;
+
+  //intimacy(numerical value)
+  int64 intimacy = 10;
+
+
+
+  //degree of growth(numerical value)
+  int64 growth = 11;
+
+  //health degree (numerical value)
+  int64 health = 12;
+
+  //cleanliness(numerical value)
+  int64 clean = 13;
+
+  //satiety(numerical value)
+  int64 hunger = 14;
+
+  //thirst degree(numerical value)
+  int64 thirsty = 15;
+
+  //defecation value(numerical value)
+  int64 defecate = 16;
+
+  //desire to sharpen one's claws
+  int64 sharpenClaws = 17;
+
+
+  //happiness value
+  int64 happiness = 18;
+
+  // physical strength value
+  int64 stamina = 19;
+
+  // charm value，gameplay attribute，default1level
+  double charm = 20;
+
+  //initial charm value
+  double basicsCharm = 21;
+
+  // strong，gameplay attribute，default level 1 attribute
+  double strength = 22;
+
+  // initial strength
+  double basicsStrength = 23;
+
+  // charm growth rate，gameplay attribute
+  double charmAdd = 24;
+
+  // strong growth rate，gameplay attribute
+  double strengthAdd = 25;
+
+  // be ill ，not sick by default
+  int32  sick = 26;
+
+  //owning userid
+  int64 userId = 27;
+
+  //sick time
+  int64 sickCalculationTime = 28;
+
+
+  //time spent on shelves or in shelters
+  int64 startTime = 29;
+  //takedown time
+  int64  endTime = 30;
+
+  //the type of price required for shelf or redemption or removal
+  int64 listingPriceType = 31;
+
+  //the price required to buy or redeem or take it off the shelves
+  int64 listingPrice = 32;
+
+
+
+  //state 1is to take in 2be for sale
+  int32  status = 33;
+
+  //quality 1white 2green 3blue 4the purple 5gold
+  int32 quality = 34;
+
+}
+
+
+
+//recycle to shelter request RECOVERSHELTER_REQ
+message RecoverShelterReq {
+
+  //login token
+  string token = 1;
+
+  //health value less than0catid
+  int64 catId = 2;
+
+
+}
+
+//recycle to shelter response RECOVERSHELTER_ACK
+message RecoverShelterAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+
+  //the catid
+  int64 catId = 3;
+
+}
+
+
+//a list of cat requests to be redeemed REDEEMCATLIST_REQ
+message RedeemCatListReq {
+
+  //login token
+  string token = 1;
+
+
+}
+
+//the list of cats that need to be redeemed responds REDEEMCATLIST_ACK
+message RedeemCatListAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //list of cats to be redeemed
+  repeated ShelterCatModule catList = 3;
+}
+
+//request for redemption of shelter cat REDEEM_REQ
+message RedeemReq {
+
+  //login token
+  string token = 1;
+
+  //hospiceID
+  int64 shelterId = 2;
+
+}
+
+//redeemed shelter cat response REDEEM_ACK
+message RedeemAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+}
+
+//shelf cat request PUTONSHELVE_REQ
+message PutonShelveReq {
+
+  //login token
+  string token = 1;
+
+  //shelf catid
+  int64 catId = 2;
+
+  //shelf price
+  int64 listingPrice = 3;
+
+
+}
+
+//shelf cat response PUTONSHELVE_ACK
+message PutonShelveAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+
+  //the catid
+  int64 catId = 3;
+
+}
+
+//remove the cat request LOWERSHELVE_REQ
+message LowerShelveReq {
+
+  //login token
+  string token = 1;
+
+  //exchange catid
+  int64 shelterId = 2;
+
+
+}
+
+//off the shelf cat response LOWERSHELVE_ACK
+message LowerShelveAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+}
+//request for cats listed at the current user's shelter PSCATSLISTBYUSER_REQ
+message PsCatListByUserReq {
+
+  //login token
+  string token = 1;
+
+
+}
+
+//response to the current user's list of cats on shelter shelves PSCATSLISTBYUSER_ACK
+message PsCatListByUserAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //a list of cats listed by users
+  repeated ShelterCatModule catList = 3;
+
+  //the current server time is rubbed
+  int64 nowTime = 4;
+}
+
+//cat list requests from all users of the shelter PSCATSLIST_REQ
+message PsCatListReq {
+
+  //login token
+  string token = 1;
+
+
+}
+
+//response to a list of cats listed by all users at the shelter PSCATSLIST_ACK
+message PsCatListAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //a list of all the cats on the shelves
+  repeated ShelterCatModule  catList = 3;
+
+
+  //the current server time is rubbed
+  int64 nowTime = 4;
+}
+//shelter cat adoption request ADOPTCAT_REQ
+message AdoptCatReq {
+
+  //login token
+  string token = 1;
+
+  //hospiceID
+  int64 shelterId = 2;
+
+}
+
+//shelter adoption cat response ADOPTCAT_ACK
+message AdoptCatAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+}
+//reduce health request after illness SICKREDUCTHEALTH_REQ
+message SickReductHealthReq {
+
+  //login token
+  string token = 1;
+
+  //the catID
+  int64 catId = 2;
+
+  //reduced quantity
+  int32  count = 3;
+
+}
+
+//reduced health response after illness SICKREDUCTHEALTH_ACK
+message SickReductHealthAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //reduced health value，cat surplus is less than or equal to0the shelter recycle interface is triggered
+  int32  reductCount = 3;
+
+
+  //the catid
+  int64 catId = 4;
+
+}
+
+//hospital request SENDTOHOSPITAL_REQ
+message SendToHospitalReq {
+
+  //login token
+  string token = 1;
+
+  //the catID
+  repeated int64 catIds = 2;
+
+
+}
+
+//hospital response SENDTOHOSPITAL_ACK
+message SendToHospitalAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+
+}
+//request to take home from hospital after treatment is completed TAKEITHOME_REQ
+message TakeItHomeReq {
+
+  //login token
+  string token = 1;
+
+  //the catID
+  repeated int64 catIds = 2;
+
+
+}
+
+//after the treatment is completed, take him home from the hospital to respond TAKEITHOME_ACK
+message TakeItHomeAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+
+}
+
+
+//cat accelerated cure price request TREATMENTPRICE_REQ
+message TreatmentPriceReq {
+
+  //login token
+  string token = 1;
+
+  //the catID
+  int64 catId = 2;
+
+
+}
+
+//cat accelerated treatment price response TREATMENTPRICE_ACK
+message TreatmentPriceAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //the amount of money needed to start treatment
+  int64 needMoney = 3;
+
+  //type of money
+  int64 moneyType = 4;
+
+
+  //the catid
+  int64 catId = 5;
+}
+
+//item recovery request RECYCLEPROPS_REQ
+message RecyclePropsReq {
+
+  //login token
+  string token = 1;
+
+  //backpackID
+  int64 itemId = 2;
+
+  //quantity sold
+  int64 count = 3;
+
+
+}
+
+//recovery item response RECYCLEPROPS_ACK
+message RecyclePropsAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //awarded
+  repeated GetPropsModule pmList = 3;
+}
+
+//earth object
+message FieldModule {
+  //toid
+  int64 id = 1;
+
+  //userid
+  int64 userId = 2;
+
+  //seedid
+  int64 seedId = 3;
+
+  //state of land，0yes unlocked，1to be reclaimed  2 idle  3 planting condition
+  int32 status = 4;
+
+  //the time to start farming
+  int64 seedTime = 5;
+
+  //time of completion of planting
+  int64 endTime = 6;
+
+  //the number of seeds currently harvested
+  int64 nowCount = 7;
+
+  //the total amount of catgrass harvested to unlock the field
+  int64 unLockNeed = 8;
+
+  //the type of cost of land reclamation
+  int64  needMoneyType = 9;
+
+  //the amount of money spent on reclamation
+  int64  needMoney = 10;
+
+
+}
+
+//user's vegetable patch list request USERFIELDLIST_REQ
+message UserFieldListReq {
+
+  //login token
+  string token = 1;
+
+
+}
+
+//the user's vegetable patch list responds USERFIELDLIST_ACK
+message UserFieldListAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //awarded
+  repeated FieldModule fieldList = 3;
+}
+
+
+//request for a vegetable plot UNLOCKFIELD_REQ
+message UnLockFieldReq {
+
+  //login token
+  string token = 1;
+
+  //unlockedid
+  int64 fieldId = 2;
+
+
+}
+
+//the planting of vegetable fields responded UNLOCKFIELD_ACK
+message UnLockFieldAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+}
+
+
+//user-owned torrent list requests USERSEED_REQ
+message UserSeedReq {
+
+  //login token
+  string token = 1;
+
+}
+
+//user-owned torrent list responses USERSEED_ACK
+message UserSeedAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //backpack list（query seed only）
+  repeated ItemModule itemList = 3;
+
+}
+
+//seed request SEED_REQ
+message SeedReq {
+
+  //login token
+  string token = 1;
+
+  //toid
+  int64 fieldId = 2;
+
+  //backpackid
+  int64 itemId = 3;
+
+}
+
+//seed response SEED_ACK
+message SeedAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+}
+//moving cat object
+message ActivitiesCatModule {
+  //the catid
+  int64 catId = 1;
+
+  //personality 1independence 2clingy 3lively 4timid 5laziness
+  int32 character = 2;
+
+  //gender 1the male2the mother
+  int32 sex = 3;
+
+
+  //cat picture
+  string catImage = 4;
+
+  //cat name
+  string name = 5;
+
+
+  //grade
+  int32 level = 6;
+
+  //intimacy(numerical value)
+  int64 intimacy = 7;
+
+  //growth value(numerical value)
+  int64 growth = 8;
+
+  //health value(numerical value)
+  int64 health = 9;
+
+  //physical strength value
+  int64 stamina = 10;
+
+  //charm value
+  double charm = 11;
+
+  //strong
+  double strength = 12;
+
+  //state 0haven't participated in the activity yet 1stealing catgrass 2defensive catgrass 3go out  4playground
+  int32 status = 13;
+
+  //activity start time
+  int64 startTime = 14;
+
+  //activity completion time
+  int64 endTime = 15;
+
+  //number of activities available，0non-participation of representative
+  int32 piCount = 16;
+
+  //time of each activity
+  int64 useTime = 17;
+
+  //whether you can claim the reward 0 can't 1can
+  int32 receiveStatus = 18;
+
+
+}
+
+//offensive cat list request ATTACKCATLIST_REQ
+message AttackCatListReq {
+
+  //login token
+  string token = 1;
+}
+
+//the attacking cat list responds ATTACKCATLIST_ACK
+message AttackCatListAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //cat list（list of available and available）
+  repeated ActivitiesCatModule catList = 3;
+
+
+}
+//request for attack ATTACK_REQ
+message AttackReq {
+
+  //login token
+  string token = 1;
+  //selectedid
+  int64 catId = 2;
+  //number of attacks
+  int32  count = 3;
+
+}
+
+//offensive response ATTACK_ACK
+message AttackAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+
+  //the catid
+  int64 catId = 3;
+
+
+}
+//defensive cat list request DEFENSECATLIST_REQ
+message DefenseCatListReq {
+
+  //login token
+  string token = 1;
+}
+
+//the defensive cat list responds DEFENSECATLIST_ACK
+message DefenseCatListAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //cat list（a list of what can and has defended）
+  repeated ActivitiesCatModule catList = 3;
+}
+//defensive call DEFENSE_REQ
+message DefenseReq {
+
+  //login token
+  string token = 1;
+  //selectedid
+  int64 catId = 2;
+}
+
+//defensive response DEFENSE_ACK
+message DefenseAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+
+  //the catid
+  int64 catId = 3;
+
+}
+
+//stealing catgrass reward claim request ATTACKRECEIVE_REQ
+message AttackReceiveReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64  catId = 2;
+
+}
+//steal cat grass reward receive response ATTACKRECEIVE_ACK
+message AttackReceiveAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //awarded
+  repeated GetPropsModule pmList = 3;
+
+
+  //the catid
+  int64 catId = 4;
+
+}
+
+
+
+//sick cat details request SICKCATINFO_REQ
+message SickCatInfoReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64 catId = 2;
+}
+
+//sick cat details response SICKCATINFO_ACK
+message SickCatInfoAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //details of a sick cat
+  SickCatModule catInfo = 3;
+
+
+  //the catid
+  int64 catId = 4;
+}
+//recovery request  PICKUP_REQ
+message PickUpReq {
+
+  //login token
+  string token = 1;
+
+}
+
+//recovery response  PICKUP_ACK
+message PickUpAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //cat list
+  repeated  CatModule catList = 3;
+}
+
+
+//gets user cooling request for cat handling   GETCOOLING_REQ
+message GetCoolingReq {
+
+  //login token
+  string token = 1;
+
+  //1001-1014 action configuration table of the catid
+  int64 playId = 2;
+
+  //the catid
+  int64 catId = 3;
+
+}
+
+//get the cooling response of the user's cat action  PICKUP_ACK
+message GetCoolingAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //cooling time
+  int64  time = 3;
+}
+
+
+//multiple cats attack request MOSTATTACK_REQ
+message MostAttackReq {
+
+  //login token
+  string token = 1;
+  //a list of attacking cats
+  repeated  AttackCatModule catList = 2;
+
+}
+
+//multiple cats attack and respond MOSTATTACK_ACK
+message MostAttackAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+}
+
+
+message AttackCatModule {
+  //the catid
+  int64 catId = 2;
+  //number of attacks
+  int32  count = 3;
+}
+
+
+
+
+//get the playground cat list request PLAYGROUNDCATLIST_REQ
+message PlayGroundCatListReq {
+
+  //login token
+  string token = 1;
+}
+
+//get playground cat list responses PLAYGROUNDCATLIST_ACK
+message PlayGroundCatListAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //cat list（list of cats that can go to the playground and have participated in the playground activities）
+  repeated ActivitiesCatModule catList = 3;
+
+
+}
+//make a request for fun activities PLAYGROUND_REQ
+message PlayGroundReq {
+
+  //login token
+  string token = 1;
+  //selectedid
+  int64 catId = 2;
+  //number of participation
+  int32  count = 3;
+
+}
+
+//respond with fun activities PLAYGROUND_ACK
+message PlayGroundAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+
+  //the catid
+  int64 catId = 3;
+
+
+}
+
+//playground award claim request PLAYGROUNDRECEIVE_REQ
+message PlayGroundReceiveReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64  catId = 2;
+
+}
+//playground reward claim response PLAYGROUNDRECEIVE_ACK
+message PlayGroundReceiveAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //awarded
+  repeated GetPropsModule pmList = 3;
+
+
+  //the catid
+  int64 catId = 4;
+
+}
+
+
+//multiple cats to participate in playground activities request MOSTPLAYGROUND_REQ
+message MostPlayGroundReq {
+
+  //login token
+  string token = 1;
+  //join the fairground cat list
+  repeated  AttackCatModule catList = 2;
+
+}
+
+//multiple cats responded by participating in the playground activities MOSTPLAYGROUND_ACK
+message MostPlayGroundAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+}
+
+
+
+//playground reward history request PLAYGROUNDHISTORY_REQ
+message PlayGroundHistoryReq {
+
+  //login token
+  string token = 1;
+
+}
+
+//playground rewards historical record response PLAYGROUNDHISTORY_ACK
+message PlayGroundHistoryAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //awarded
+  repeated GetPropsModule pmList = 3;
+
+}
+
+
+//mailing list request MAIL_LIST_REQ
+message MailListReq {
+
+  //login token
+  string token = 1;
+
+  //how many per page
+  int32 limit = 2;
+
+  //what page
+  int32 page = 3;
+
+}
+
+//mailing list response MAIL_LIST_ACK
+message MailListAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //mailing list
+  repeated Mail mailList = 3;
+
+  //total count
+  int32 total = 4;
+
+  //number of strips
+  int32 size = 5;
+
+  //current page
+  int32 current = 6;
+
+  //total page count
+  int32  pages = 7;
+
+}
+
+message Mail {
+
+  int32 id = 1;
+  //time
+
+  string createTime = 2;
+
+  //email contentID
+  int64 contentId = 3;
+
+  //specific reward（|articlesID|quantity，multiple to&distinguish），the first10the list has a split list
+  string gifts = 4;
+
+  //sender
+  int64 sendUser = 5;
+
+  //addressee
+  int64 toUser = 6;
+
+  //have you received it?
+  bool statue = 7;
+
+  //type1.reward email，0text mail
+  int32 type = 8;
+
+  //whether it has been read
+  bool readStatue = 9;
+
+  //awarded
+  repeated GetPropsModule pmList = 10;
+
+  //the description of the email content that needs to be replaced
+  repeated  string replaceContent = 11;
+
+  //sender name
+  string sendUserName = 12;
+
+}
+
+
+
+
+//mail collection request MAIL_RECEIVE_REQ
+message MailReceiveReq {
+
+  //login token
+  string token = 1;
+
+  //mailid
+  repeated int64 ids = 2;
+
+}
+
+//mail collection response MAIL_RECEIVE_ACK
+message MailReceiveAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+}
+
+//mail read request MAIL_READ_REQ
+message MailReadReq {
+
+  //login token
+  string token = 1;
+
+  //mailid
+  repeated int64 ids = 2;
+
+}
+
+//the email has been read and responded MAIL_READ_ACK
+message MailReadAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+}
+
+//mail deletion request MAIL_DELETE_REQ
+message MailDeleteReq {
+
+  //login token
+  string token = 1;
+
+  //mailid
+  repeated int64 ids = 2;
+
+}
+
+//email deletion response MAIL_DELETE_ACK
+message MailDeleteAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+}
+
+//new email response MAIL_NEW_ACK
+message MailNewAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //number of unread emails
+  int32  count  = 3;
+
+}
+
+
+//cooldown request using the cat lift item CATPLAY_COOLING_REQ
+message CatPlayCoolingReq {
+
+  //login token
+  string token = 1;
+
+  //the catid
+  int64 catId = 2;
+
+}
+
+//use the cooling response of the cat prop CATPLAY_COOLING_ACK
+message CatPlayCoolingAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //the catid
+  int64 catId = 3;
+
+  //cooling list
+  repeated CoolingModule coolingList = 4;
+
+}
+
+
+//cooling object
+message  CoolingModule{
+
+  //behaviorid
+  int64 playId = 1;
+
+  //remaining cooling time,millisecond
+  int64 cooling = 2;
+
+}
+
+
+
+
+//shelter statistics request PS_STATISTICS_REQ
+message PsStatisticsReq {
+
+  //login token
+  string token = 1;
+
+
+}
+
+//shelter statistical response PS_STATISTICS_ACK
+message PsStatisticsAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //24the number of cats traded by the hour
+  int64  catCount1 = 3;
+
+  //24the number of hourly trading users
+  int64  userCount1 = 4;
+
+  //7the number of cats traded on the sky
+  int64  catCount2 = 5;
+
+  //7the number of daily transaction users
+  int64  userCount2 = 6;
+
+  //30the number of cats traded on the sky
+  int64  catCount3 = 7;
+
+  //30the number of daily transaction users
+  int64  userCount3 = 8;
+
+  //total number of cats traded
+  int64  catCount4 = 9;
+
+  //the number of total transaction users
+  int64  userCount4 = 10;
+
+}
+
+//playground rewards one-click claim request ALLPLAYGROUNDRECEIVE_REQ
+message AllPlayGroundReceiveReq {
+
+  //login token
+  string token = 1;
+
+
+}
+//playground reward one-click claim response ALLPLAYGROUNDRECEIVE_ACK
+message AllPlayGroundReceiveAck {
+  //result
+  int32 code = 1;
+
+  //prompt
+  string message = 2;
+
+  //awarded
+  repeated GetPropsModule pmList = 3;
+
+}

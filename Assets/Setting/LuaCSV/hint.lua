@@ -1,0 +1,98 @@
+hint={
+	[1]={
+		id=1,
+		content = "Cat is ill",
+		tips = "Are you sure to take the cat to the hospital for treatment?",
+		pic = "ill",
+	},
+	[2]={
+		id=2,
+		content = "Cat is injured",
+		tips = "Are you sure to take the cat to the hospital for treatment?",
+		pic = "injured",
+	},
+	[3]={
+		id=3,
+		content = "Cat is poisoned",
+		tips = "Are you sure to take the cat to the hospital for treatment?",
+		pic = "poison",
+	},
+	[4]={
+		id=4,
+		content = "The cat's treatment is complete",
+		tips = "Are you sure to go to the hospital to take the cat home?",
+		pic = "treatmentComplete",
+	},
+	[5]={
+		id=5,
+		content = "No food in the bowl",
+		tips = "0",
+		pic = "noFood",
+	},
+	[6]={
+		id=6,
+		content = "No water in the bowl",
+		tips = "0",
+		pic = "noWater",
+	},
+	[7]={
+		id=7,
+		content = "No sand in the toilet",
+		tips = "0",
+		pic = "noSand",
+	},
+	[8]={
+		id=8,
+		content = "Scratch board is broken",
+		tips = "0",
+		pic = "scratchBoardBroken",
+	},
+	[9]={
+		id=9,
+		content = "Cat's game time is over",
+		tips = "Are you sure to go to the playground ?",
+		pic = "gameTimeOver",
+	},
+	[10]={
+		id=10,
+		content = "Cat's travel time is over",
+		tips = "Are you sure to open the memory？",
+		pic = "travelTimeOver",
+	},
+	[11]={
+		id=11,
+		content = "Cat's plunder time is over",
+		tips = "Are you sure to go to the garden?",
+		pic = "plunderTimeOver",
+	},
+	[12]={
+		id=12,
+		content = "Cat's defence time is over",
+		tips = "Are you sure to go to the garden?",
+		pic = "defenceTimeOver",
+	},
+	[13]={
+		id=13,
+		content = "Mint growth is complete",
+		tips = "Are you sure to go to the garden?",
+		pic = "MintComplete",
+	},
+	[14]={
+		id=14,
+		content = "The land has been unlocked",
+		tips = "Are you sure to go to the garden?",
+		pic = "landUnlock",
+	},
+	[15]={
+		id=15,
+		content = "Food preparation completed",
+		tips = "Are you sure to open the air dryer？",
+		pic = "foodPreparationCompleted",
+	},
+	[16]={
+		id=16,
+		content = "Air dryer unlocks the next layer",
+		tips = "Are you sure to open the air dryer？",
+		pic = "airDryerUnlock",
+	},
+}
